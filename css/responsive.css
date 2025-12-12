@@ -8,6 +8,21 @@
   .booking-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .booking-form textarea{grid-column:1 / -1}
 }
+/* Gallery responsive */
+@media(max-width:767px){
+  .gallery-grid{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+  .gallery-item img{height:160px}
+}
+@media(min-width:1024px){
+  .gallery-grid{grid-template-columns:repeat(3,1fr)}
+}
+
+/* Videos responsive */
+@media(max-width:767px){
+  .videos-grid{grid-template-columns:1fr}
+  .video-item.featured{grid-column:span 1;grid-row:span 1}
+}
+
 /* Simple accessibility helpers */
 .focus-visible:focus{outline:3px solid rgba(26,122,79,0.25)}
 .reduce-motion *{animation-duration:0.001ms !important;transition-duration:0.001ms !important}

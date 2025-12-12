@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded',function(){
     navToggle.addEventListener('click',()=>{
       navMenu.classList.toggle('open');
     });
+    // Close menu on link click
+    navMenu.querySelectorAll('a').forEach(link=>{
+      link.addEventListener('click',()=>navMenu.classList.remove('open'));
+    });
   }
 
   // FAQ accordion
@@ -16,15 +20,22 @@ document.addEventListener('DOMContentLoaded',function(){
     })
   });
 
-  // Video filters
+  // Video filters (improved)
   document.querySelectorAll('.filter-btn').forEach(btn=>{
     btn.addEventListener('click',()=>{
       document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
       const f = btn.dataset.filter;
-      document.querySelectorAll('.video-item').forEach(item=>{
-        if(f==='all' || item.dataset.filter===f) item.style.display='block'; else item.style.display='none';
+      const videos = document.querySelectorAll('.video-item');
+      let visible = 0;
+      videos.forEach(item=>{
+        const show = (f==='all' || item.dataset.filter===f);
+        item.style.display = show ? 'block' : 'none';
+        item.style.opacity = show ? '1' : '0';
+        if(show) visible++;
       });
+      // Show message if no videos
+      if(visible === 0) console.log('No videos found for filter: ' + f);
     })
   });
 
@@ -33,12 +44,16 @@ document.addEventListener('DOMContentLoaded',function(){
   if(bookingForm){
     bookingForm.addEventListener('submit', function(e){
       e.preventDefault();
-      const inputs = bookingForm.querySelectorAll('input, textarea, select');
-      const data = {};
-      inputs.forEach(inp=>{ if(inp.name || inp.placeholder){ const key = inp.name || inp.placeholder; data[key]=inp.value; }});
-      const phone = '+96566568372';
-      const message = encodeURIComponent(`طلب خدمة من الموقع\nالاسم: ${bookingForm.querySelector('input[type="text"]').value || ''}\nالهاتف: ${bookingForm.querySelector('input[type="tel"]').value || ''}\nالبريد: ${bookingForm.querySelector('input[type="email"]').value || ''}\nالخدمة: ${bookingForm.querySelector('select').value || ''}\nملاحظة: ${bookingForm.querySelector('textarea').value || ''}`);
-      window.open(`https://wa.me/${phone.replace('+','')}?text=${message}`,'_blank');
+      const name = bookingForm.querySelector('input[type="text"]')?.value || '';
+      const email = bookingForm.querySelector('input[type="email"]')?.value || '';
+      const phone = bookingForm.querySelector('input[type="tel"]')?.value || '';
+      const service = bookingForm.querySelector('select')?.value || '';
+      const notes = bookingForm.querySelector('textarea')?.value || '';
+      
+      const whatsappPhone = '+96566568372';
+      const message = encodeURIComponent(`📋 طلب خدمة جديد\n\n👤 الاسم: ${name}\n📧 البريد: ${email}\n📱 الهاتف: ${phone}\n🛠️ الخدمة: ${service}\n💬 الملاحظات: ${notes}`);
+      window.open(`https://wa.me/${whatsappPhone.replace('+','')}?text=${message}`,'_blank');
+      bookingForm.reset();
     })
   }
 
@@ -55,8 +70,26 @@ document.addEventListener('DOMContentLoaded',function(){
   // Lazy images
   document.querySelectorAll('img[loading="lazy"]').forEach(img=>{
     if('IntersectionObserver' in window){
-      const io = new IntersectionObserver(entries=>{ entries.forEach(ent=>{ if(ent.isIntersecting){ const i=ent.target; i.src = i.dataset.src || i.src; io.unobserve(i); }}); });
+      const io = new IntersectionObserver(entries=>{ 
+        entries.forEach(ent=>{ 
+          if(ent.isIntersecting){ 
+            const i=ent.target; 
+            i.src = i.dataset.src || i.src; 
+            i.classList.add('loaded');
+            io.unobserve(i); 
+          }
+        }); 
+      });
       if(img.dataset.src) io.observe(img);
     }
+  });
+  
+  // Smooth scroll for anchors
+  document.querySelectorAll('a[href^="#"]').forEach(link=>{
+    link.addEventListener('click',function(e){
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if(target) target.scrollIntoView({behavior:'smooth'});
+    })
   });
 });

@@ -21,7 +21,24 @@ body{margin:0;background:var(--bg);color:var(--text);line-height:1.6}
 .hero{background:linear-gradient(180deg, rgba(26,122,79,0.06), transparent);padding:48px 0}
 .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
 .service-card{display:block;padding:18px;border-radius:8px;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,0.04);text-decoration:none;color:inherit}
-.gallery-grid, .videos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+/* Gallery Grid - Fixed aspect ratio */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.gallery-item{overflow:hidden;border-radius:8px;background:#f5f5f5}
+.gallery-item img{width:100%;height:240px;object-fit:cover;display:block}
+.gallery-item picture{display:block}
+
+/* Video Grid */
+.videos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.video-item{border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.video-item.featured{grid-column:span 2;grid-row:span 2}
+.video-wrapper{position:relative;width:100%;padding-bottom:56.25%;background:#000;overflow:hidden}
+.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+.video-thumbnail{width:100%;height:100%;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.play-button{font-size:48px;color:#fff;z-index:10}
+.video-info{padding:12px;background:#fff;min-height:100px;display:flex;flex-direction:column}
+.video-info h3{margin:0 0 4px 0;font-size:16px;font-weight:600;color:var(--text)}
+.video-info p{margin:0 0 8px 0;font-size:13px;color:var(--muted);flex-grow:1}
+.video-category{display:inline-block;background:rgba(26,122,79,0.1);color:var(--brand);padding:4px 8px;border-radius:4px;font-size:11px;width:fit-content}
 .booking-form input, .booking-form textarea, .booking-form select{width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:6px}
 .cta-button{display:inline-block;background:var(--brand);color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none}
 .footer{background:#0f3b2a;color:#fff;padding:28px 0;margin-top:40px}

@@ -1,0 +1,10 @@
+[build]
+  publish = "."
+  command = ""
+
+# Simple config for hosting static site root
+# Netlify will publish the repository root. No build step required.
+
+[context.production.environment]
+  # Example env var placeholder
+  SITE_NAME = "jasmine-gardens"

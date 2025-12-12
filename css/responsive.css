@@ -1,0 +1,13 @@
+/* Responsive overrides */
+@media(max-width:767px){
+  .container{padding:0 12px}
+  .hero{padding:28px 0}
+  .logo img{height:40px}
+}
+@media(min-width:768px){
+  .booking-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .booking-form textarea{grid-column:1 / -1}
+}
+/* Simple accessibility helpers */
+.focus-visible:focus{outline:3px solid rgba(26,122,79,0.25)}
+.reduce-motion *{animation-duration:0.001ms !important;transition-duration:0.001ms !important}
